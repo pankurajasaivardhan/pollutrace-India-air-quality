@@ -12,7 +12,8 @@ import (
 
 // Server serves the read-only PolluTrace API from a database.
 type Server struct {
-	DB *database.Queries
+	DB   *database.Queries
+	Live *LiveConfig
 	// AllowOrigin is sent as Access-Control-Allow-Origin when non-empty.
 	AllowOrigin string
 	// InferenceURL is the base URL of the Python inference service; empty disables /api/predict.
@@ -23,6 +24,7 @@ type Server struct {
 func (s *Server) Handler() http.Handler {
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /api/healthz", s.health)
+	mux.HandleFunc("GET /api/live", s.live)
 	mux.HandleFunc("GET /api/cities", s.cities)
 	mux.HandleFunc("GET /api/pollution", s.pollution)
 	mux.HandleFunc("GET /api/anomalies", s.anomalies)
@@ -30,7 +32,13 @@ func (s *Server) Handler() http.Handler {
 	mux.HandleFunc("GET /api/metrics", s.metrics)
 	mux.HandleFunc("GET /api/predictions", s.predictions)
 	mux.HandleFunc("POST /api/predict", s.predict)
-	return s.cors(mux)
+	return s.cors(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if s.DB == nil && r.URL.Path != "/api/live" && r.URL.Path != "/api/healthz" && r.URL.Path != "/api/cities" && r.URL.Path != "/api/predict" && r.Method != http.MethodOptions {
+			writeError(w, 503, "Historical database is not configured; station readings are available separately at /api/live.")
+			return
+		}
+		mux.ServeHTTP(w, r)
+	}))
 }
 
 func (s *Server) cors(next http.Handler) http.Handler {
@@ -77,6 +85,10 @@ func (s *Server) health(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) cities(w http.ResponseWriter, r *http.Request) {
+	if s.DB == nil {
+		writeJSON(w, 200, []string{"Delhi", "Mumbai", "Bengaluru", "Hyderabad"})
+		return
+	}
 	rows, err := s.DB.ListCities(r.Context())
 	if err != nil {
 		s.internal(w, err)

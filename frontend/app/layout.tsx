@@ -7,7 +7,7 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'PolluTrace - PM2.5 forecasting and pollutant analysis',
+  title: 'PolluTrace - Station readings and PM2.5 research',
   description: 'Historical PM2.5 analysis, next-day forecasts and baselines for four Indian cities (Delhi, Mumbai, Bengaluru, Hyderabad)',
   icons: {
     icon: [

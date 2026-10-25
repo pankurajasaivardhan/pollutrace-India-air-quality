@@ -21,7 +21,8 @@ export default function Navigation({
 
   const cities = cityList && cityList.length ? cityList : ['Delhi', 'Mumbai', 'Bengaluru', 'Hyderabad'];
   const pages = [
-    { name: 'Dashboard', href: '/' },
+    { name: 'History', href: '/' },
+    { name: 'Station readings', href: '/live' },
     { name: 'Predictions', href: '/predictions' },
     { name: 'Sources', href: '/sources' },
     { name: 'Anomalies', href: '/anomalies' },
@@ -49,7 +50,7 @@ export default function Navigation({
               <Link
                 key={page.href}
                 href={page.href}
-                className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                className={`px-2 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                   currentPage === page.href
                     ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/50'
                     : 'text-gray-300 hover:text-white hover:bg-slate-700'

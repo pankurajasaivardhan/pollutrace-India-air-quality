@@ -1,12 +1,40 @@
 # PolluTrace: PM2.5 Forecasting and Pollutant-Pattern Analysis for Four Indian Cities
 
-PolluTrace looks at daily PM2.5 for Delhi, Mumbai, Bengaluru and Hyderabad (2010 to March 2023). It has a reproducible data pipeline, a PostgreSQL schema, a Go JSON API and a Next.js dashboard.
+PolluTrace looks at daily PM2.5 for Delhi, Mumbai, Bengaluru and Hyderabad (2010 to March 2023). It has a reproducible historical research pipeline, a PostgreSQL schema, a Go JSON API and a Next.js dashboard. A separate station-readings page accesses recent observations through OpenAQ, where verified coverage is available.
 
 **Honest summary of the results**
 
 - On a held-out, chronological test period the LSTM does **not** beat the trivial "tomorrow equals today" baseline in any of the four cities. XGBoost on the same 30-day window beats it only in Delhi, and only slightly.
 - The autoencoder anomaly flags are unsupervised (no ground-truth labels). The test-period flag rates are far from the 5% the threshold was set for in two cities, and the cause has not been investigated.
 - The pollutant ranking is a statistical association inside a predictive model. It is not source apportionment and not causal.
+
+## Free current station readings (new)
+
+The **Station readings** page (`/live`) calls the Go server's `/api/live?city=Delhi` endpoint. It shows actual PM2.5 station observations, not CAMS estimates, city averages, an Indian AQI, or output from our historical LSTM/XGBoost. No values are invented when a source fails.
+
+Coverage verified on 25 October 2026:
+
+| City | Configured station | Source and rights | Limit |
+|---|---|---|---|
+| Delhi | OpenAQ 8118, New Delhi | AirNow; OpenAQ license 33, US Public Domain | One government monitor; not a city average |
+| Mumbai | OpenAQ 8039, Mumbai | AirNow; same license | One government monitor; not a city average |
+| Bengaluru | Unavailable | Recent sensor owner name indicated indoor ambiguity; not accepted as ambient city monitoring | No substitute values |
+| Hyderabad | Unavailable | CPCB candidates were about 46 hours old and location license metadata was missing; AirNow candidate was older | No substitute values |
+
+Coverage and delays can change. The page always shows the actual measurement time (IST), retrieval time, units, station, provider, owner and license. A measurement older than 3 hours is marked stale. This is a project display rule, not an official freshness standard. Readings are provisional and not medical advice or an official alert.
+
+**Free local setup, without Postgres, model downloads or TensorFlow:**
+
+1. Create your own [free OpenAQ account](https://explore.openaq.org/register), verify its email and obtain the key from the account page. Keep your key private. If using the owner's private bundle, the owner already has an account and saved key; do not register duplicate keys.
+2. With Go 1.25+ and Python 3 installed, run `python3 pipeline/start_live.py`. Paste the key at its hidden prompt. This does not write the key to disk. Alternatively set `OPENAQ_API_KEY`, `LIVE_ONLY=true` and `CORS_ALLOW_ORIGIN=http://localhost:3000` server-side and run `go run .`.
+3. In another terminal: `cd frontend && npm ci && npm run dev`. Open `http://localhost:3000/live`.
+4. The historical pages need the full database setup below. Their absence in live-only mode does not affect station readings.
+
+The free API permits [60 requests/minute and 2,000/hour](https://docs.openaq.org/using-the-api/rate-limits). This single-process server caches successes and errors for one hour per configured city (no retries on a 429), and the page has no background polling. One uncached request uses at most three provider calls: location metadata, license and latest measurement. Multi-process deployments need a shared cache/rate limiter. No card, subscription, billing setup or paid hosting is part of this project. There is no guaranteed uptime, comprehensive coverage, or completed public deployment.
+
+API keys never enter browser bundles, output JSON, code, archives or git. Only city/station queries go to the provider. Do not expose a public high-traffic proxy with this private owner's key. For a public multiuser deployment, configure authentication, abuse protection and shared quota controls first.
+
+Data credits: [OpenAQ](https://openaq.org/) and [AirNow](https://www.airnow.gov/). OpenAQ license metadata labels these stations US Public Domain; underlying owner metadata is "Unknown Governmental Organization", which is preserved rather than guessed. License source supplied by OpenAQ: http://www.usa.gov/publicdomain/label/1.0/ . See [OpenAQ terms](https://docs.openaq.org/about/terms) and [station metadata](https://docs.openaq.org/resources/locations). These station rights do not clear redistribution of the separate historical Kaggle dataset/models.
 
 ## Results
 
@@ -103,7 +131,7 @@ Tested environment: Python 3.10, TensorFlow 2.21 and Keras 3.12.4 from a clean v
    python pipeline/load_db.py --results outputs --db "postgresql://localhost/pollutrace"
    ```
    This recreates the tables from `sql/schema` and replaces their contents.
-4. **Start the inference service** (only needed for the live forecast form; it serves the saved models):
+4. **Start the inference service** (only needed for the historical-model demonstration form; it serves the saved models):
    ```bash
    python pipeline/serve.py --models outputs/models --port 8100
    ```

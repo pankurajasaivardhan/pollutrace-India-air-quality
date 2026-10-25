@@ -44,3 +44,7 @@ export const api = {
   forecast: (input: ForecastInput) => post<ForecastResult>('/api/predict', input),
   metrics: () => get<MetricRow[]>('/api/metrics'),
 };
+
+export interface StationReading { sensor_id: number; pollutant: string; parameter: string; unit: string; value: number; measured_at: string; age_hours: number; stale: boolean }
+export interface LiveStation { city: string; kind: string; station_id: number; station_name: string; locality: string; source: string; source_url: string; retrieved_at: string; next_refresh_at: string; provider: { name?: string }; owner: { name?: string }; licenses: { id: number; name: string; sourceUrl?: string; attribution?: unknown }[]; readings: StationReading[]; note: string }
+export const liveStation = (city: string) => get<LiveStation>(`/api/live${q(city)}`);

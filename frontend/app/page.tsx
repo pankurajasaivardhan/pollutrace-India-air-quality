@@ -28,7 +28,7 @@ function Dashboard({ city }: { city: string }) {
       {series.length > 0 && (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <Card title="Latest measured day"><p className="text-3xl font-bold">{fmt(last?.pm25)} <span className="text-base font-normal text-slate-500">µg/m³</span></p><p className="text-sm text-slate-500">{last?.date}</p></Card>
+            <Card title="Latest historical day"><p className="text-3xl font-bold">{fmt(last?.pm25)} <span className="text-base font-normal text-slate-500">µg/m³</span></p><p className="text-sm text-slate-500">{last?.date}</p></Card>
             <Card title="Days with PM2.5"><p className="text-3xl font-bold">{measured.length}</p></Card>
             <Card title="Period"><p className="text-xl font-semibold">{series[0].month} to {series[series.length - 1].month}</p></Card>
           </div>
@@ -45,5 +45,5 @@ function Dashboard({ city }: { city: string }) {
 }
 
 export default function Page() {
-  return <PageShell page="/" title="PM2.5 history" subtitle="Measured air quality for four Indian cities, 2010 to 2023">{(c) => <Dashboard city={c} />}</PageShell>;
+  return <PageShell page="/" title="PM2.5 history" subtitle="Historical measurements, 2010 to 2023. For current station data, use Station readings.">{(c) => <Dashboard city={c} />}</PageShell>;
 }
