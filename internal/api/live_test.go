@@ -2,7 +2,7 @@ package api_test
 
 import (
 	"encoding/json"
-	"github.com/pankurajasaivardhan/pollutrace-india-air-quality/internal/api"
+	"github.com/pankurajasaivardhan/pollutrace-India-air-quality/internal/api"
 	"net/http"
 	"net/http/httptest"
 	"strings"

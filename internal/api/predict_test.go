@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/pankurajasaivardhan/pollutrace-india-air-quality/internal/api"
+	"github.com/pankurajasaivardhan/pollutrace-India-air-quality/internal/api"
 )
 
 // These test only the Go proxy layer (status mapping, size and type limits, CORS preflight).

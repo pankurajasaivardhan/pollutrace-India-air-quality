@@ -7,7 +7,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/pankurajasaivardhan/pollutrace-india-air-quality/internal/database"
+	"github.com/pankurajasaivardhan/pollutrace-India-air-quality/internal/database"
 )
 
 // Server serves the read-only PolluTrace API from a database.

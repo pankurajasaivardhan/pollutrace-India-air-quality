@@ -13,8 +13,8 @@ import (
 
 	_ "github.com/lib/pq"
 
-	"github.com/pankurajasaivardhan/pollutrace-india-air-quality/internal/api"
-	"github.com/pankurajasaivardhan/pollutrace-india-air-quality/internal/database"
+	"github.com/pankurajasaivardhan/pollutrace-India-air-quality/internal/api"
+	"github.com/pankurajasaivardhan/pollutrace-India-air-quality/internal/database"
 )
 
 // These are integration tests against a REAL PostgreSQL server.

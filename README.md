@@ -163,7 +163,7 @@ TEST_DB_URL="postgresql://localhost/pollutrace_test?sslmode=disable" go test ./.
 ## Known limits
 
 - The forecast needs the Python inference service running next to the API. Without it `/api/predict` returns 503 and the rest of the dashboard still works.
-- The forecast is a demonstration: it uses only the 30 days you supply, and on the test period the the LSTM had a higher RMSE than the persistence baseline in all four cities (XGBoost was lower only in Delhi).
+- The forecast is a demonstration: it uses only the 30 days you supply, and on the test period the LSTM had a higher RMSE than the persistence baseline in all four cities (XGBoost was lower only in Delhi).
 - The city value is a mean over whichever stations report that day, so coverage changes over time.
 - No weather inputs, so the forecaster has little to learn beyond recent PM2.5.
 - Trained model files and derived data (including the old models from the first version of this project) are not published in this repository. The dataset's reuse terms are unresolved, so a model/data bundle is not offered publicly. See "Data".

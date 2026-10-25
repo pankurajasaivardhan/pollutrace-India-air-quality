@@ -1,4 +1,4 @@
-module github.com/pankurajasaivardhan/pollutrace-india-air-quality
+module github.com/pankurajasaivardhan/pollutrace-India-air-quality
 
 go 1.25.0
 
