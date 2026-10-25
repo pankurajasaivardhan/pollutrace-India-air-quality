@@ -1,14 +1,13 @@
 -- +goose Up
+-- Held-out TEST-period next-day PM2.5 predictions, produced by pipeline/run_all.py.
 CREATE TABLE lstm_predictions (
-    id              SERIAL PRIMARY KEY,
-    city            VARCHAR(50),
-    date            DATE,
-    predicted_pm25  FLOAT,
-    actual_pm25     FLOAT,
-    rmse            FLOAT,
-    mae             FLOAT,
-    r2_score        FLOAT,
-    created_at      TIMESTAMP DEFAULT NOW()
+    id                    SERIAL PRIMARY KEY,
+    city                  VARCHAR(50) NOT NULL,
+    date                  DATE NOT NULL,
+    actual_pm25           FLOAT,
+    predicted_pm25_lstm   FLOAT,
+    predicted_pm25_persistence FLOAT,
+    predicted_pm25_xgboost     FLOAT
 );
 
 -- +goose Down

@@ -1,0 +1,226 @@
+{
+ "Delhi": {
+  "test_fit": {
+   "rmse": 31.602706584848082,
+   "mae": 24.789025989005026,
+   "r2": 0.8035761635365125,
+   "n": 726
+  },
+  "ranking": [
+   {
+    "pollutant": "PM10",
+    "mean_abs_shap": 19.96461296081543,
+    "indicative_source": "coarse dust / road and construction dust"
+   },
+   {
+    "pollutant": "Benzene",
+    "mean_abs_shap": 15.1862154006958,
+    "indicative_source": "fuel and solvent related"
+   },
+   {
+    "pollutant": "CO",
+    "mean_abs_shap": 11.17733383178711,
+    "indicative_source": "incomplete combustion (traffic, biomass burning)"
+   },
+   {
+    "pollutant": "NOx",
+    "mean_abs_shap": 8.58000659942627,
+    "indicative_source": "traffic and combustion"
+   },
+   {
+    "pollutant": "NO",
+    "mean_abs_shap": 7.843012809753418,
+    "indicative_source": "traffic and combustion"
+   },
+   {
+    "pollutant": "NO2",
+    "mean_abs_shap": 7.606727600097656,
+    "indicative_source": "traffic and combustion"
+   },
+   {
+    "pollutant": "NH3",
+    "mean_abs_shap": 7.052947044372559,
+    "indicative_source": "agriculture, waste, industry"
+   },
+   {
+    "pollutant": "Ozone",
+    "mean_abs_shap": 3.7225680351257324,
+    "indicative_source": "secondary photochemistry"
+   },
+   {
+    "pollutant": "SO2",
+    "mean_abs_shap": 3.2007980346679688,
+    "indicative_source": "coal and industrial combustion"
+   }
+  ],
+  "note": "association with PM2.5, not causal source apportionment"
+ },
+ "Bengaluru": {
+  "test_fit": {
+   "rmse": 11.077686999758875,
+   "mae": 8.006139488681118,
+   "r2": 0.2665746584353438,
+   "n": 726
+  },
+  "ranking": [
+   {
+    "pollutant": "PM10",
+    "mean_abs_shap": 6.308326721191406,
+    "indicative_source": "coarse dust / road and construction dust"
+   },
+   {
+    "pollutant": "NO2",
+    "mean_abs_shap": 3.5243782997131348,
+    "indicative_source": "traffic and combustion"
+   },
+   {
+    "pollutant": "Benzene",
+    "mean_abs_shap": 2.4929652214050293,
+    "indicative_source": "fuel and solvent related"
+   },
+   {
+    "pollutant": "CO",
+    "mean_abs_shap": 2.219240665435791,
+    "indicative_source": "incomplete combustion (traffic, biomass burning)"
+   },
+   {
+    "pollutant": "Ozone",
+    "mean_abs_shap": 2.012742280960083,
+    "indicative_source": "secondary photochemistry"
+   },
+   {
+    "pollutant": "SO2",
+    "mean_abs_shap": 1.557785987854004,
+    "indicative_source": "coal and industrial combustion"
+   },
+   {
+    "pollutant": "NO",
+    "mean_abs_shap": 1.4740610122680664,
+    "indicative_source": "traffic and combustion"
+   },
+   {
+    "pollutant": "NH3",
+    "mean_abs_shap": 1.4069064855575562,
+    "indicative_source": "agriculture, waste, industry"
+   },
+   {
+    "pollutant": "NOx",
+    "mean_abs_shap": 1.3043605089187622,
+    "indicative_source": "traffic and combustion"
+   }
+  ],
+  "note": "association with PM2.5, not causal source apportionment"
+ },
+ "Mumbai": {
+  "test_fit": {
+   "rmse": 9.904969045166538,
+   "mae": 7.197155159278416,
+   "r2": 0.8661421409034018,
+   "n": 726
+  },
+  "ranking": [
+   {
+    "pollutant": "PM10",
+    "mean_abs_shap": 15.446438789367676,
+    "indicative_source": "coarse dust / road and construction dust"
+   },
+   {
+    "pollutant": "NO2",
+    "mean_abs_shap": 3.5483555793762207,
+    "indicative_source": "traffic and combustion"
+   },
+   {
+    "pollutant": "Benzene",
+    "mean_abs_shap": 2.3522772789001465,
+    "indicative_source": "fuel and solvent related"
+   },
+   {
+    "pollutant": "SO2",
+    "mean_abs_shap": 1.5031111240386963,
+    "indicative_source": "coal and industrial combustion"
+   },
+   {
+    "pollutant": "NH3",
+    "mean_abs_shap": 1.287169098854065,
+    "indicative_source": "agriculture, waste, industry"
+   },
+   {
+    "pollutant": "NO",
+    "mean_abs_shap": 0.9176453351974487,
+    "indicative_source": "traffic and combustion"
+   },
+   {
+    "pollutant": "CO",
+    "mean_abs_shap": 0.8651753664016724,
+    "indicative_source": "incomplete combustion (traffic, biomass burning)"
+   },
+   {
+    "pollutant": "Ozone",
+    "mean_abs_shap": 0.844706118106842,
+    "indicative_source": "secondary photochemistry"
+   },
+   {
+    "pollutant": "NOx",
+    "mean_abs_shap": 0.8072329759597778,
+    "indicative_source": "traffic and combustion"
+   }
+  ],
+  "note": "association with PM2.5, not causal source apportionment"
+ },
+ "Hyderabad": {
+  "test_fit": {
+   "rmse": 13.062632190275398,
+   "mae": 8.910232917421498,
+   "r2": 0.5376284439023059,
+   "n": 676
+  },
+  "ranking": [
+   {
+    "pollutant": "PM10",
+    "mean_abs_shap": 12.973991394042969,
+    "indicative_source": "coarse dust / road and construction dust"
+   },
+   {
+    "pollutant": "Ozone",
+    "mean_abs_shap": 4.355983257293701,
+    "indicative_source": "secondary photochemistry"
+   },
+   {
+    "pollutant": "CO",
+    "mean_abs_shap": 4.008060932159424,
+    "indicative_source": "incomplete combustion (traffic, biomass burning)"
+   },
+   {
+    "pollutant": "NOx",
+    "mean_abs_shap": 2.4827208518981934,
+    "indicative_source": "traffic and combustion"
+   },
+   {
+    "pollutant": "NO2",
+    "mean_abs_shap": 2.2817633152008057,
+    "indicative_source": "traffic and combustion"
+   },
+   {
+    "pollutant": "NO",
+    "mean_abs_shap": 1.8262256383895874,
+    "indicative_source": "traffic and combustion"
+   },
+   {
+    "pollutant": "Benzene",
+    "mean_abs_shap": 1.6970793008804321,
+    "indicative_source": "fuel and solvent related"
+   },
+   {
+    "pollutant": "SO2",
+    "mean_abs_shap": 1.5160561800003052,
+    "indicative_source": "coal and industrial combustion"
+   },
+   {
+    "pollutant": "NH3",
+    "mean_abs_shap": 1.1484535932540894,
+    "indicative_source": "agriculture, waste, industry"
+   }
+  ],
+  "note": "association with PM2.5, not causal source apportionment"
+ }
+}

@@ -11,16 +11,16 @@ import (
 )
 
 const getModelMetrics = `-- name: GetModelMetrics :many
-SELECT city, model_type, rmse, mae, r2_score, confidence FROM model_metrics
+SELECT city, model_type, rmse, mae, r2_score, n_test_days FROM model_metrics ORDER BY city, model_type
 `
 
 type GetModelMetricsRow struct {
-	City       sql.NullString
-	ModelType  sql.NullString
-	Rmse       sql.NullFloat64
-	Mae        sql.NullFloat64
-	R2Score    sql.NullFloat64
-	Confidence sql.NullFloat64
+	City      string
+	ModelType string
+	Rmse      sql.NullFloat64
+	Mae       sql.NullFloat64
+	R2Score   sql.NullFloat64
+	NTestDays sql.NullInt32
 }
 
 func (q *Queries) GetModelMetrics(ctx context.Context) ([]GetModelMetricsRow, error) {
@@ -38,7 +38,7 @@ func (q *Queries) GetModelMetrics(ctx context.Context) ([]GetModelMetricsRow, er
 			&i.Rmse,
 			&i.Mae,
 			&i.R2Score,
-			&i.Confidence,
+			&i.NTestDays,
 		); err != nil {
 			return nil, err
 		}

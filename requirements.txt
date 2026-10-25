@@ -1,9 +1,6 @@
 numpy
 pandas
-matplotlib
-seaborn
-xgboost
 scikit-learn
-tensorflow
-keras
-SHAP
+xgboost
+tensorflow>=2.17
+psycopg2-binary

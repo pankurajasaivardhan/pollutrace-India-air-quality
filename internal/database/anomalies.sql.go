@@ -8,29 +8,48 @@ package database
 import (
 	"context"
 	"database/sql"
+	"time"
 )
 
-const getCityAnomaly = `-- name: GetCityAnomaly :one
-SELECT city, date, pm25, is_anomaly, severity FROM anomalies WHERE city=$1
+const getCityAnomalies = `-- name: GetCityAnomalies :many
+SELECT city, date, pm25, is_anomaly, severity FROM anomalies
+WHERE city = $1
+ORDER BY date
 `
 
-type GetCityAnomalyRow struct {
-	City      sql.NullString
-	Date      sql.NullTime
+type GetCityAnomaliesRow struct {
+	City      string
+	Date      time.Time
 	Pm25      sql.NullFloat64
 	IsAnomaly sql.NullBool
 	Severity  sql.NullString
 }
 
-func (q *Queries) GetCityAnomaly(ctx context.Context, city sql.NullString) (GetCityAnomalyRow, error) {
-	row := q.db.QueryRowContext(ctx, getCityAnomaly, city)
-	var i GetCityAnomalyRow
-	err := row.Scan(
-		&i.City,
-		&i.Date,
-		&i.Pm25,
-		&i.IsAnomaly,
-		&i.Severity,
-	)
-	return i, err
+func (q *Queries) GetCityAnomalies(ctx context.Context, city string) ([]GetCityAnomaliesRow, error) {
+	rows, err := q.db.QueryContext(ctx, getCityAnomalies, city)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []GetCityAnomaliesRow
+	for rows.Next() {
+		var i GetCityAnomaliesRow
+		if err := rows.Scan(
+			&i.City,
+			&i.Date,
+			&i.Pm25,
+			&i.IsAnomaly,
+			&i.Severity,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
 }

@@ -1,0 +1,15 @@
+{
+ "python": "3.13.15",
+ "tensorflow": "2.20.0",
+ "gpus": [],
+ "station_files_used": 134,
+ "city_days": 19018,
+ "seed": 42,
+ "seq_len": 30,
+ "split": {
+  "train": 0.7,
+  "val": 0.15,
+  "test": 0.15
+ },
+ "seconds": 371
+}

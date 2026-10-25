@@ -6,18 +6,18 @@ package database
 
 import (
 	"database/sql"
+	"time"
 )
 
 type Anomaly struct {
 	ID                  int32
-	City                sql.NullString
-	Date                sql.NullTime
+	City                string
+	Date                time.Time
 	Pm25                sql.NullFloat64
 	ReconstructionError sql.NullFloat64
 	Threshold           sql.NullFloat64
 	IsAnomaly           sql.NullBool
 	Severity            sql.NullString
-	CreatedAt           sql.NullTime
 }
 
 type CityPollution struct {
@@ -41,37 +41,30 @@ type CityPollution struct {
 }
 
 type LstmPrediction struct {
-	ID            int32
-	City          sql.NullString
-	Date          sql.NullTime
-	PredictedPm25 sql.NullFloat64
-	ActualPm25    sql.NullFloat64
-	Rmse          sql.NullFloat64
-	Mae           sql.NullFloat64
-	R2Score       sql.NullFloat64
-	CreatedAt     sql.NullTime
+	ID                       int32
+	City                     string
+	Date                     time.Time
+	ActualPm25               sql.NullFloat64
+	PredictedPm25Lstm        sql.NullFloat64
+	PredictedPm25Persistence sql.NullFloat64
+	PredictedPm25Xgboost     sql.NullFloat64
 }
 
 type ModelMetric struct {
-	ID         int32
-	City       sql.NullString
-	ModelType  sql.NullString
-	Rmse       sql.NullFloat64
-	Mae        sql.NullFloat64
-	R2Score    sql.NullFloat64
-	Confidence sql.NullFloat64
-	TrainedAt  sql.NullTime
+	ID        int32
+	City      string
+	ModelType string
+	Rmse      sql.NullFloat64
+	Mae       sql.NullFloat64
+	R2Score   sql.NullFloat64
+	NTestDays sql.NullInt32
 }
 
 type SourceAnalysis struct {
-	ID             int32
-	City           sql.NullString
-	TopSource1     sql.NullString
-	TopSource2     sql.NullString
-	TopSource3     sql.NullString
-	Pm10Importance sql.NullFloat64
-	CoImportance   sql.NullFloat64
-	Nh3Importance  sql.NullFloat64
-	Confidence     sql.NullFloat64
-	CreatedAt      sql.NullTime
+	ID          int32
+	City        string
+	Rank        int32
+	Pollutant   string
+	MeanAbsShap sql.NullFloat64
+	ModelTestR2 sql.NullFloat64
 }

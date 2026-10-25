@@ -1,0 +1,42 @@
+{
+ "Delhi": {
+  "threshold_mse": 0.013338077813386917,
+  "test_days_measured": 726,
+  "test_days_flagged": 22,
+  "test_flag_rate": 0.030303030303030304,
+  "expected_rate_if_stable_distribution": 0.05,
+  "sanity_flagged_with_pm25_above_train_p95": 0.0,
+  "sanity_unflagged_with_pm25_above_train_p95": 0.018465909090909092,
+  "note": "unsupervised; no ground-truth labels; distribution shift across years inflates flag rate"
+ },
+ "Bengaluru": {
+  "threshold_mse": 0.006596150808036327,
+  "test_days_measured": 726,
+  "test_days_flagged": 137,
+  "test_flag_rate": 0.1887052341597796,
+  "expected_rate_if_stable_distribution": 0.05,
+  "sanity_flagged_with_pm25_above_train_p95": 0.0,
+  "sanity_unflagged_with_pm25_above_train_p95": 0.0,
+  "note": "unsupervised; no ground-truth labels; distribution shift across years inflates flag rate"
+ },
+ "Mumbai": {
+  "threshold_mse": 0.008042789064347744,
+  "test_days_measured": 726,
+  "test_days_flagged": 1,
+  "test_flag_rate": 0.0013774104683195593,
+  "expected_rate_if_stable_distribution": 0.05,
+  "sanity_flagged_with_pm25_above_train_p95": 1.0,
+  "sanity_unflagged_with_pm25_above_train_p95": 0.11862068965517242,
+  "note": "unsupervised; no ground-truth labels; distribution shift across years inflates flag rate"
+ },
+ "Hyderabad": {
+  "threshold_mse": 0.006366073619574308,
+  "test_days_measured": 676,
+  "test_days_flagged": 137,
+  "test_flag_rate": 0.20266272189349113,
+  "expected_rate_if_stable_distribution": 0.05,
+  "sanity_flagged_with_pm25_above_train_p95": 0.0,
+  "sanity_unflagged_with_pm25_above_train_p95": 0.0,
+  "note": "unsupervised; no ground-truth labels; distribution shift across years inflates flag rate"
+ }
+}

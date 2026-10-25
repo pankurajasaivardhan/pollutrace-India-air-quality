@@ -11,16 +11,21 @@ import (
 )
 
 const getCityPollutionRecord = `-- name: GetCityPollutionRecord :many
-SELECT city, date, pm25, pm10, no2, co FROM city_pollution WHERE city=$1
+SELECT city, date, pm25, pm10, no2, nox, so2, co, ozone FROM city_pollution
+WHERE city = $1
+ORDER BY date
 `
 
 type GetCityPollutionRecordRow struct {
-	City sql.NullString
-	Date sql.NullTime
-	Pm25 sql.NullFloat64
-	Pm10 sql.NullFloat64
-	No2  sql.NullFloat64
-	Co   sql.NullFloat64
+	City  sql.NullString
+	Date  sql.NullTime
+	Pm25  sql.NullFloat64
+	Pm10  sql.NullFloat64
+	No2   sql.NullFloat64
+	Nox   sql.NullFloat64
+	So2   sql.NullFloat64
+	Co    sql.NullFloat64
+	Ozone sql.NullFloat64
 }
 
 func (q *Queries) GetCityPollutionRecord(ctx context.Context, city sql.NullString) ([]GetCityPollutionRecordRow, error) {
@@ -38,11 +43,44 @@ func (q *Queries) GetCityPollutionRecord(ctx context.Context, city sql.NullStrin
 			&i.Pm25,
 			&i.Pm10,
 			&i.No2,
+			&i.Nox,
+			&i.So2,
 			&i.Co,
+			&i.Ozone,
 		); err != nil {
 			return nil, err
 		}
 		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listCities = `-- name: ListCities :many
+SELECT city::text AS city FROM (
+    SELECT city FROM city_pollution
+    UNION SELECT city FROM model_metrics
+) c WHERE city IS NOT NULL ORDER BY city
+`
+
+func (q *Queries) ListCities(ctx context.Context) ([]string, error) {
+	rows, err := q.db.QueryContext(ctx, listCities)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []string
+	for rows.Next() {
+		var city string
+		if err := rows.Scan(&city); err != nil {
+			return nil, err
+		}
+		items = append(items, city)
 	}
 	if err := rows.Close(); err != nil {
 		return nil, err

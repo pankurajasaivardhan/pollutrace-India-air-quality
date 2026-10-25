@@ -10,27 +10,44 @@ import (
 	"database/sql"
 )
 
-const getSourceAnalysis = `-- name: GetSourceAnalysis :one
-SELECT city, top_source_1, top_source_2, pm10_importance, confidence FROM source_analysis WHERE city=$1
+const getSourceAnalysis = `-- name: GetSourceAnalysis :many
+SELECT city, rank, pollutant, mean_abs_shap, model_test_r2
+FROM source_analysis WHERE city = $1 ORDER BY rank
 `
 
 type GetSourceAnalysisRow struct {
-	City           sql.NullString
-	TopSource1     sql.NullString
-	TopSource2     sql.NullString
-	Pm10Importance sql.NullFloat64
-	Confidence     sql.NullFloat64
+	City        string
+	Rank        int32
+	Pollutant   string
+	MeanAbsShap sql.NullFloat64
+	ModelTestR2 sql.NullFloat64
 }
 
-func (q *Queries) GetSourceAnalysis(ctx context.Context, city sql.NullString) (GetSourceAnalysisRow, error) {
-	row := q.db.QueryRowContext(ctx, getSourceAnalysis, city)
-	var i GetSourceAnalysisRow
-	err := row.Scan(
-		&i.City,
-		&i.TopSource1,
-		&i.TopSource2,
-		&i.Pm10Importance,
-		&i.Confidence,
-	)
-	return i, err
+func (q *Queries) GetSourceAnalysis(ctx context.Context, city string) ([]GetSourceAnalysisRow, error) {
+	rows, err := q.db.QueryContext(ctx, getSourceAnalysis, city)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []GetSourceAnalysisRow
+	for rows.Next() {
+		var i GetSourceAnalysisRow
+		if err := rows.Scan(
+			&i.City,
+			&i.Rank,
+			&i.Pollutant,
+			&i.MeanAbsShap,
+			&i.ModelTestR2,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
 }

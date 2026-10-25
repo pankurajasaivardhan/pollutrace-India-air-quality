@@ -1,13 +1,13 @@
 -- +goose Up
+-- Held-out TEST-period metrics for each forecaster, including the persistence baseline.
 CREATE TABLE model_metrics (
     id          SERIAL PRIMARY KEY,
-    city        VARCHAR(50),
-    model_type  VARCHAR(50),
+    city        VARCHAR(50) NOT NULL,
+    model_type  VARCHAR(50) NOT NULL,
     rmse        FLOAT,
     mae         FLOAT,
     r2_score    FLOAT,
-    confidence  FLOAT,
-    trained_at  TIMESTAMP DEFAULT NOW()
+    n_test_days INT
 );
 
 -- +goose Down
