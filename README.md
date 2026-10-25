@@ -2,17 +2,6 @@
 ### Urban Air Pollution Source Analysis and Prediction System
 
 
-## Team
-
-| Name | Enrollment | Role |
-|------|------------|------|
-| Jyothi Kiran Satya Raju Jamy | E23CSEU2363 | Backend Development (Go) |
-| Panku Raja Sai Vardhan | E23CSEU2183 | AI and Machine Learning |
-| Aditi Jain | E23CSEU2354 | Frontend Development & Visualization |
-| Manohith Sai Mamidala | E23CSEU2064 | Database Management |
-
----
-
 ## Project Overview
 
 PolluTrace AI is an end-to-end AI system that analyses urban air pollution in Indian cities. It goes beyond traditional monitoring by:
